@@ -1,4 +1,5 @@
 .vercel
+<<<<<<< HEAD
 __pycache__
 *.pyc
 .env
@@ -6,3 +7,7 @@ __pycache__
 venv
 model.pkl
 *.pkl
+=======
+node_modules
+.next/
+>>>>>>> 32f43e20c93c2edc78f2b396d3b420d1475b0f10
