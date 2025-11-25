@@ -6,20 +6,24 @@ import numpy as np
 import os
 
 # --- MODEL LOADING (Serverless Optimization) ---
+MODEL = None
+LABEL_ENCODERS = None
+FEATURE_COLUMNS = None
+
 try:
     # Model.pkl should be in root directory (same level as 'api' folder)
     model_path = os.path.join(os.path.dirname(__file__), '..', 'model.pkl')
-    with open(model_path, 'rb') as file:
-        model_data = pickle.load(file)
-    MODEL = model_data['model']
-    LABEL_ENCODERS = model_data['label_encoders']
-    FEATURE_COLUMNS = model_data['feature_columns']
-    print("✓ Model loaded successfully!")
-except FileNotFoundError as e:
-    print(f"✗ Error: model.pkl not found at {model_path}")
-    MODEL = None
-    LABEL_ENCODERS = None
-    FEATURE_COLUMNS = None
+    if os.path.exists(model_path):
+        with open(model_path, 'rb') as file:
+            model_data = pickle.load(file)
+        MODEL = model_data['model']
+        LABEL_ENCODERS = model_data['label_encoders']
+        FEATURE_COLUMNS = model_data['feature_columns']
+        print("✓ Model loaded successfully!")
+    else:
+        print("⚠ Model file not found - API will return error until model is uploaded")
+except Exception as e:
+    print(f"✗ Error loading model: {e}")
 
 # --- FLASK APP INITIALIZATION ---
 app = Flask(__name__)
