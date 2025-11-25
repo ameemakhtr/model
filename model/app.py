@@ -79,20 +79,20 @@ def predict():
                 'error': f'Missing required fields: {", ".join(missing_fields)}'
             }), 400
         
-        # Prepare input data
+        # Prepare input data with correct column names from training
         input_dict = {
-            'Model Year': int(data.get('modelYear', 2024)),
+            'Model_Year': int(data.get('modelYear', 2024)),
             'Make': str(data.get('make', '')),
             'Model': str(data.get('model', '')),
-            'Electric Vehicle Type': str(data.get('evType', '')),
-            'CAFV Eligibility': str(data.get('cafvEligibility', ''))
+            'EV_Type': str(data.get('evType', '')),
+            'CAFV_Eligibility': str(data.get('cafvEligibility', ''))
         }
         
         # Create DataFrame with same columns as training data
         input_df = pd.DataFrame([input_dict])
         
         # Encode categorical features
-        for col in ['Make', 'Model', 'Electric Vehicle Type', 'CAFV Eligibility']:
+        for col in ['Make', 'Model', 'EV_Type', 'CAFV_Eligibility']:
             if col in label_encoders:
                 try:
                     input_df[col] = label_encoders[col].transform(input_df[col].astype(str))
@@ -114,7 +114,7 @@ def predict():
                 'inputData': {
                     'county': data.get('county', 'N/A'),
                     'city': data.get('city', 'N/A'),
-                    'modelYear': input_dict['Model Year'],
+                    'modelYear': input_dict['Model_Year'],
                     'make': data.get('make', ''),
                     'model': data.get('model', ''),
                     'evType': data.get('evType', ''),

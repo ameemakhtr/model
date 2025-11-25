@@ -17,8 +17,8 @@ except FileNotFoundError:
 
 # --- 2. Data Cleaning & Feature Selection ---
 # Select relevant columns for prediction
-feature_columns = ['Model Year', 'Make', 'Model', 'Electric Vehicle Type', 'CAFV Eligibility']
-target_column = 'Electric Range'
+feature_columns = ['Model_Year', 'Make', 'Model', 'EV_Type', 'CAFV_Eligibility']
+target_column = 'Electric_Range'
 
 # Filter data to only include rows with all required columns
 df_clean = df[feature_columns + [target_column]].copy()
@@ -33,7 +33,7 @@ y = df_clean[target_column].copy()
 
 # Store label encoders for later use
 label_encoders = {}
-categorical_features = ['Make', 'Model', 'Electric Vehicle Type', 'CAFV Eligibility']
+categorical_features = ['Make', 'Model', 'EV_Type', 'CAFV_Eligibility']
 
 for col in categorical_features:
     le = LabelEncoder()
